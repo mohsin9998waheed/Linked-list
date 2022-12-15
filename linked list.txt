@@ -1,0 +1,274 @@
+//Name: Mohsin Waheed
+//Reg : 4335/BSSE/F-21/SEC-B
+//Program:  LINKED LIST
+#include<iostream>
+using namespace std;
+class node
+{
+	int data;
+	node* next;
+public:
+	node()
+	{
+		data = 0;
+		next = NULL;
+	}
+	void display(node* head);
+	void addData(node*& first);
+	void sorting(node* first);
+	void deletion(node*& first);
+	node* search(node* first, int);
+	void insert(node*& first);
+	void update(node* first);
+	void average(node* head);
+};
+
+void node::average(node* head)
+{
+	int sum = 0, n = 0;
+	float average;
+	node* temp = head;
+	while (temp != NULL)
+	{
+		sum = sum + temp->data;
+		n++;
+		temp = temp->next;
+	}
+	average = static_cast<float>(sum) / n;
+	cout << " Average is : " << average << endl;
+	system("pause");
+}
+void node::update(node* head)
+{
+	int dta;
+	node* temp=NULL;
+	cout << " Enter data to update : ";
+	cin >> dta;
+	temp = search(head, dta);
+	if (temp == NULL)
+	{
+		cout << " Wrong data Entered ! " << endl;
+		return;
+	}
+	else
+	{
+		cout << " Enter New data : ";
+		cin >> temp->data;
+		cout << " Updated successfully !" << endl;
+
+	}
+	system("pause");
+}
+void node::insert(node*& head)
+{
+
+	node* temp = head;
+	node* a;
+	node* inser = new node;
+	inser->next = NULL;
+	cout << " Enter data : " << endl;
+	cin >> inser->data;
+	for (a = temp; a->next != NULL; a = a->next)
+	{
+		if (inser->data >= a->data && inser->data <= a->next->data)
+		{
+			inser->next = a->next;
+			a->next = inser;
+			cout << " Inserted successfully ! " << endl;
+			return;
+		}
+	}
+	system("pause");
+
+}
+node* node::search(node* first, int n)
+{
+	node* temp = first;
+	if (first->data == n)
+	{
+		cout << " Found ! " << endl;
+		return temp;
+	}
+	else
+		while (temp != NULL)
+		{
+			if (temp->data == n)
+			{
+				//cout << " found !" << endl;
+				return temp;
+			}
+			temp = temp->next;
+		}
+	if (temp == NULL)
+	{
+		//cout << " NOT found !!" << endl;
+		return temp;
+	}
+}
+void node::deletion(node*& first)
+{
+	node* temp, * nex = NULL;
+	//node* nex;
+
+	node* start = first;
+
+	int srch;
+	cout << " Enter data to delete : ";
+	cin >> srch;
+	temp = search(first, srch);
+	if (temp == NULL)
+	{
+		cout << " Not Found ! " << endl;
+		system("pause");
+		return;
+	}
+	if (first == temp)
+	{
+		node* toDel = first;
+		first = first->next;
+		cout << " Deleted Successfully !" << endl;
+		delete toDel;
+		system("pause");
+		return;
+	}
+	else 
+	{
+		while (start->next != NULL)
+		{
+			if (start->next == temp)
+			{
+				node* toDel = temp;
+
+				start->next = temp->next;
+				cout << " Deleted Successfully !" << endl;
+				delete toDel;
+				system("pause");
+				return;
+			}
+			start = start->next;
+		}
+	}
+
+}
+void node::sorting(node* first)
+{
+	node* a, * b;
+	int dta;
+	for (a = first; a != NULL; a = a->next)
+	{
+		for (b = a->next; b != NULL; b = b->next)
+		{
+			if (a->data > b->data)
+			{
+				dta = a->data;
+				a->data = b->data;
+				b->data = dta;
+			}
+		}
+	}
+}
+void node::addData(node*& first)
+{
+
+
+	node* cur = new node;
+	cur->next = NULL;
+	cout << " Enter data ";
+	cin >> cur->data;
+	if (first == NULL)
+	{
+		first = cur;
+		return;
+	}
+	node* prev = first;
+	while (prev->next != NULL)
+	{
+		prev = prev->next;
+	}
+	prev->next = cur;
+}
+void node:: display(node* head)
+{
+
+	node* temp = head;
+
+	while (temp != NULL)
+	{
+		cout << temp->data << "  ";
+		temp = temp->next;
+	}
+	system("pause");
+}
+int main()
+{
+	node n;
+	node* first = NULL;
+	node* srch=NULL;
+	int choice, dat;
+	char choice1 = '0';
+	do {
+		system("cls");
+		cout << "----------------------------------------------------------------" << endl;
+		cout << "   **** Press 1 to create link list      ***" << endl;
+		cout << "   **** Press 2 to display list  ***" << endl;
+		cout << "   **** Press 3 to sort list    ***" << endl;
+		cout << "   **** Press 4 to search list  ***" << endl;
+		cout << "   **** Press 5 to update list  ***" << endl;
+		cout << "   **** Press 6 to delete data ***" << endl;
+		cout << "   **** Press 7 to insert data ***" << endl;
+		cout << "   **** Press 8 to avarge data ***" << endl;
+		cout << "   **** Press 9 to exit               ***" << endl;
+		cout << "------------------------------------------------------------------" << endl;
+
+		cin >> choice;
+
+		switch (choice)
+		{
+		case 1:
+			do {
+
+				n.addData(first);
+				cout << " Y.Add more " << endl;
+				cout << " N.exit " << endl;
+				cin >> choice1;
+
+			} while (choice1 == 'y');
+			break;
+
+		case 2:
+			n.display(first);
+			break;
+		case 3:
+			n.sorting(first);
+			n.display(first);
+			break;
+		case 4:
+			cout << " Enter data to search : ";
+			cin >> dat;
+			srch=n.search(first, dat);
+			if (srch != NULL)
+			{
+				cout << " Found ! " << endl;
+			}
+			else
+				cout << " Not Found " << endl;
+			system("pause");
+			break;
+		case 5:
+			n.update(first);
+			break;
+		case 6:
+			n.deletion(first);
+			n.display(first);
+			break;
+		case 7:
+			n.insert(first);
+			break;
+		case 8:
+			n.average(first);
+			break;
+		case 9:
+			exit(-1);
+		}
+	} while (1);
+}
