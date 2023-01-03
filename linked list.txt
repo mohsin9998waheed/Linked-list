@@ -1,5 +1,4 @@
-//Name: Mohsin Waheed
-//Reg : 4335/BSSE/F-21/SEC-B
+
 //Program:  LINKED LIST
 #include<iostream>
 using namespace std;
